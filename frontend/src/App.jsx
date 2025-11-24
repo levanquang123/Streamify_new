@@ -9,6 +9,7 @@ import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 import { axiosInstance } from "./lib/axios.js";
 import { useQuery } from "@tanstack/react-query";
+import PageLoader from "./components/PageLoader.jsx";
 
 const App = () => {
   const { 
@@ -24,8 +25,12 @@ const App = () => {
     // auth check
     retry: false,
   });
+  
   const authUser = authData?.user;
   
+  if(isLoading) return <PageLoader />
+
+
   return (
     <div className="h-screen" data-theme="night">
       <Routes>
