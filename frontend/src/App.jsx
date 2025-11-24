@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router";
 
 import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
@@ -9,7 +9,6 @@ import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 import PageLoader from "./components/PageLoader.jsx";
 import useAuthUser from "./hooks/useAuthUser.js";
-import { Layout } from "lucide-react";
 
 
 const App = () => {
@@ -22,28 +21,30 @@ const App = () => {
   return (
     <div className="h-screen" data-theme="night">
       <Routes>
-        <Route
+      <Route
           path="/"
           element={
             isAuthenticated && isOnboarded ? (
-              <Layout showSidebar={true}>
+              // <Layout showSidebar={true}>
                 <HomePage />
-              </Layout>
+              // </Layout>
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
           }
         />
-
-        <Route path="/signup" element={<SignUpPage />} />
-
-        {/* <Route
+        <Route
+          path="/signup"
+          element={
+            !isAuthenticated ? <SignUpPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+          }
+        />
+        <Route
           path="/login"
           element={
             !isAuthenticated ? <LoginPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
           }
-        /> */}
-        <Route path="/login" element={<LoginPage />} />
+        />
 
         <Route
           path="/notifications"
